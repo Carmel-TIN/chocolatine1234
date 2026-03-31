@@ -2,14 +2,14 @@ name: chocolatine
 on:
     push:
         branches-ignore:
-            - 'ga-ignore-*'
+            - 'no-ga/**'
     pull_request:
         branches-ignore:
-            - 'ga-ignore-*'
+            - 'no-ga/**'
 
 env:
     MIRROR_URL: "git@github.com:EpitechPGE1-2025/G-DOP-200-COT-2-1-chocolatine-37.git"
-    EXECUTABLES: "binary1,binary2"
+    EXECUTABLES: "101pong"
 
 jobs:
     check_coding_style:
@@ -20,7 +20,7 @@ jobs:
               uses: actions/checkout@v4
             - name: Coding style checker
               run: |
-                check.sh $(pwd) $(pwd)
+                banana-check-repo $(pwd) $(pwd)
                 if [ -s coding-style-reports.log ]; then
                   while IFS= read -r line; do
                     file=$(echo "$line" | cut -d':' -f1)
