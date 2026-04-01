@@ -12,15 +12,17 @@ env:
     EXECUTABLES: "101pong"
 
 jobs:
-    check_coding_style:
+    check_compilation_and_coding_style:
+        name: check compilation and coding style
+        if: github.event.repository.ssh_url != env.MIRROR_URL
         runs-on: ubuntu-latest
-        container: ghcr.io/epitech/coding-style-checker:latest
+        container: epitechcontent/epitest-docker:latest
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
             - name: Coding style checker
               run: |
-                banana-check-repo $(pwd) $(pwd)
+                banana-check-repo .
                 if [ -s coding-style-reports.log ]; then
                   while IFS= read -r line; do
                     file=$(echo "$line" | cut -d':' -f1)
@@ -31,18 +33,12 @@ jobs:
                   done < coding-style-reports.log
                 exit 1
                 fi
-                echo "No coding style errors found!"
-    check_program_compilation:
-        needs: [check_coding_style]
-        runs-on: ubuntu-latest
-        container: epitechcontent/epitest-docker:latest
-        env:
-          CC: epiclang
-        steps:
-            - uses: actions/checkout@v4
-            - name: Buil project
+            - name: Launch make
               run: make
-            - name: Clean project
+              env:
+                CC: epiclang
+              timeout-minutes: 2
+            - name: Launch make clean
               run: make clean
             - name: Verify executables
               run: |
@@ -54,20 +50,24 @@ jobs:
                     fi
                 done
     run_tests:
-        needs: [check_program_compilation]
+        name: Run unit tests
+        needs: [check_compilation_and_coding_style]
         runs-on: ubuntu-latest
         container: epitechcontent/epitest-docker:latest
         steps:
-          - uses: actions/checkout@v4
-          - name: Run unit tests
+          - name: Checkout repository
+            uses: actions/checkout@v4
+          - name: Launch make tests_run
             run: make tests_run
             timeout-minutes: 2
     push_to_mirror:
+        name: Push to mirror repository
         needs: [run_tests]
         if: github.event_name == 'push'
         runs-on: ubuntu-latest
         steps:
-          - uses: actions/checkout@v4
+          - name: Checkout repository (full history)
+            uses: actions/checkout@v4
             with:
               fetch-depth: 0
           - name: Mirroring to Epitech repository
