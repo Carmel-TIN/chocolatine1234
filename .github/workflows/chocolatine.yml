@@ -8,16 +8,16 @@ on:
             - 'no-ga/**'
 
 env:
-    MIRROR_URL: "git@github.com:EpitechPGE1-2025/G-DOP-200-COT-2-1-chocolatine-37.git"
+    MIRROR_SSH_URL: "git@github.com:EpitechPGE1-2025/G-DOP-200-COT-2-1-chocolatine-37.git"
     EXECUTABLES: "101pong"
 
 jobs:
     check_compilation_and_coding_style:
         name: check compilation and coding style
-        if: github.event.repository.ssh_url != env.MIRROR_URL
         runs-on: ubuntu-latest
         container: epitechcontent/epitest-docker:latest
         steps:
+            if: ${{ !contains(env.MIRROR_URL, github.repository) }}
             - name: Checkout repository
               uses: actions/checkout@v4
             - name: Coding style checker
