@@ -8,8 +8,8 @@ on:
             - 'no-ga/**'
 
 env:
-    MIRROR_SSH_URL: "git@github.com:EpitechPGE1-2025/G-DOP-200-COT-2-1-chocolatine-37.git"
-    EXECUTABLES: "101pong"
+    MIRROR_SSH_URL: "git@github.com:Carmel-TIN/chocolatine1234.git"
+    EXECUTABLES: "mysh"
 
 jobs:
     check_compilation_and_coding_style:
