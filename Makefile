@@ -9,7 +9,7 @@ CC	=	clang
 
 CFLAGS	=	-Wall -Wextra -I./include
 
-SRC	=	101pong.c
+SRC	=	pong.c
 
 OBJ	=	$(SRC:.c=.o)
 

@@ -7,6 +7,7 @@
 
 #ifndef PONG_H_
     #define PONG_H_
+    #define M_PI 3.14
 
 typedef struct vector{
     double x;
