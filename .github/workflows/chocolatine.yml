@@ -44,7 +44,6 @@ jobs:
               run: make clean
             - name: Verify executables
               run: |
-                IFS=',' read -ra BINARIES <<< "$EXECUTABLES"
                 for binary in $(echo $EXECUTABLES | tr ',' ' '); do
                   if [ ! -x "$binary" ]; then
                     echo "::error file=$binary,title=Binary Error::Executable '$binary' missing or not executable"
