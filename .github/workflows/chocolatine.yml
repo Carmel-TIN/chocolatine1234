@@ -27,13 +27,13 @@ jobs:
                 banana-check-repo .
                 if [ -s coding-style-reports.log ]; then
                   while IFS= read -r line; do
-                    file=$(echo "$line" | cut -d':' -f1)
-                    line_nb=$(echo "$line" | cut -d':' -f2)
-                    type=$(echo "$line" | cut -d':' -f3)
-                    code=$(echo "$line" | cut -d':' -f4)
-                    echo "::error file=$file,line=$line_nb,title=$type coding style error::$code"
+                    FILE=$(echo "$line" | cut -d':' -f1)
+                    LINE=$(echo "$line" | cut -d':' -f2)
+                    TYPE=$(echo "$line" | cut -d':' -f3)
+                    CODE=$(echo "$line" | cut -d':' -f4)
+                    echo "::error file=$FILE,line=$LINE,title=$TYPE coding style error::$CODE"
                   done < coding-style-reports.log
-                exit 1
+                  exit 1
                 fi
             - name: Launch make
               run: make
