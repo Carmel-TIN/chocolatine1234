@@ -17,7 +17,9 @@ jobs:
         runs-on: ubuntu-latest
         container: epitechcontent/epitest-docker:latest
         steps:
-            if: ${{ !contains(env.MIRROR_URL, github.repository) }}
+            - name: Check mirroring
+              if: ${{ !contains(env.MIRROR_SSH_URL, github.repository) }}
+              run: echo "Possible mirroring"
             - name: Checkout repository
               uses: actions/checkout@v4
             - name: Coding style checker
