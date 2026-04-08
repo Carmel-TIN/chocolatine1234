@@ -24,7 +24,7 @@ jobs:
               uses: actions/checkout@v4
             - name: Coding style checker
               run: |
-                banana-check-repo . > coding-style-reports.log
+                banana-check-repo . > coding-style-reports.log 2>&1 || true
                 if [ -s coding-style-reports.log ]; then
                   while IFS= read -r line; do
                     FILE=$(echo "$line" | cut -d':' -f1)
